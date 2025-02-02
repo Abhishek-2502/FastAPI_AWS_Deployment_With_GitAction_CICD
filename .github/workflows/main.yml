@@ -1,37 +1,30 @@
-name: Deploy FastAPI to EC2
+name: Deploy to EC2
 
 on:
   push:
     branches:
-      - main  # Adjust if your default branch is different
-  workflow_dispatch:  # Allows manual triggering
+      - main  # Trigger on push to the main branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    # Checkout the code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+    # Set up SSH agent to use the private key stored in GitHub Secrets
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
 
-      - name: Deploy application to EC2
-        run: |
-          ssh ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
-            cd /home/ec2-user/FastAPI_Deploy # Change to your actual project directory
-            
-            # Pull latest changes
-            git pull origin main  
-
-            # Install the app using setup.py
-            sudo python3 setup.py install  
-
-            # Restart FastAPI application
-            sudo systemctl restart fastapi.service || sudo start-fastapi  
-          EOF
+    # Deploy to EC2
+    - name: Deploy to EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+          cd FastAPI_Deploy
+          git pull origin main  # Pull latest code
+          # Add any additional deployment commands here
+        EOF
