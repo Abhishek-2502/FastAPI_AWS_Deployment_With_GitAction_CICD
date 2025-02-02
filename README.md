@@ -56,7 +56,10 @@ pip install . --break-system-packages
 ```  
 
 Command to install all the requirements required for the project to run using requirements.txt file.
+
+```sh
 pip install -r requirements.txt
+``` 
 
 
 Command to run the API when using setup.py file:
