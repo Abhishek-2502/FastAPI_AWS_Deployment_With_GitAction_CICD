@@ -25,8 +25,10 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
           cd /home/ec2-user/FastAPI_Deploy
+          sudo chown -R ec2-user:ec2-user .git  # Change ownership to ec2-user
           git config --global --add safe.directory /home/ec2-user/FastAPI_Deploy  # Add the repo to safe directory
           git pull origin main  # Pull latest code
           # Add any additional deployment commands here
         EOF
+
 
