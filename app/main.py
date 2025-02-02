@@ -4,7 +4,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "Hello3 W3ofgrld from Abhi44shes1s"}
+    return {"message": "Hello3 W3ofgrl3d from Abhi44shes1s"}
 
 @app.get("/test")
 async def test_route():
