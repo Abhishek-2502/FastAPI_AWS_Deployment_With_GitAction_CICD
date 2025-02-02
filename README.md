@@ -1,5 +1,5 @@
-# Fastapi-hosting
-Complete Guide for hosting fastapi. Below are the steps for hosting fastapi on aws ec2 and access it through anywhere on the internet.
+# FastAPI-Deployment
+Complete Guide to deploy FastAPI. Below are the steps to deploy FastAPI on AWS EC2 and access it through anywhere on the internet.
 
 ### Built With
 
@@ -11,7 +11,7 @@ Complete Guide for hosting fastapi. Below are the steps for hosting fastapi on a
 
 ### Prerequisites
 
-We assume that you have a amazon ec2 instance (Amazon Linux).
+We assume that you have a Amazon EC2 instance (Amazon Linux).
 
 After you enter the instance by ssh or any other method update the instance first by using below command:
 
