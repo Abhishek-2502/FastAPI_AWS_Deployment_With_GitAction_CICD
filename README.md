@@ -112,7 +112,7 @@ Access the website from "Public IPv4 address" provided by the instance and add :
 
 1. Under Git Action, select set up a workflow yourself.
 
-2. Add following code in main.yml
+2. Add following code in main.yml and make name changes according to your repo
 
 ```sh
 name: Deploy to EC2
