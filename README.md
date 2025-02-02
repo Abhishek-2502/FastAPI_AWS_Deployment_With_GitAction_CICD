@@ -141,22 +141,27 @@ jobs:
     - name: Deploy to EC2
       run: |
         ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
-          cd /home/ec2-user/FastAPI_Deploy   # CHANGE ACCORDING TO YOUR REPO
-          # Change ownership of the whole repo
-          sudo chown -R ec2-user:ec2-user .
-          # Ensure read/write permissions for the user
-          sudo chmod -R u+rw .  
-          # Add the repo to safe directory 
-          git config --global --add safe.directory /home/ec2-user/FastAPI_Deploy  # CHANGE ACCORDING TO YOUR REPO
-          # Pull latest code
-          git pull origin main  
+          cd /home/ec2-user/FastAPI_Deploy
+          sudo chown -R ec2-user:ec2-user .  # Change ownership of the whole repo
+          sudo chmod -R u+rw .  # Ensure read/write permissions for the user
+          git config --global --add safe.directory /home/ec2-user/FastAPI_Deploy  # Add the repo to safe directory
+          git pull origin main  # Pull latest code
 
           # Add any additional deployment commands here
           # Install dependencies via setup.py
           sudo python3 setup.py install
 
-          # Start FastAPI application
-          start-fastapi
+          # Stop existing FastAPI process safely
+          PID=$(pgrep -f "uvicorn")
+          if [ ! -z "$PID" ]; then
+            echo "Stopping existing FastAPI process with PID $PID"
+            kill -9 $PID
+          fi
+    
+          # Start FastAPI in the background
+          nohup start-fastapi > fastapi.log 2>&1 &
+    
+          echo "FastAPI restarted successfully!"
         EOF
 ```
 
