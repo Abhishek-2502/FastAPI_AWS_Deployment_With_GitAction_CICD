@@ -13,7 +13,7 @@ Complete Guide to deploy FastAPI. Below are the steps to deploy FastAPI on AWS E
 
 We assume that you have a Amazon EC2 instance (Amazon Linux).
 
-After you enter the instance by ssh or any other method update the instance first by using below command:
+After you enter the instance by ssh or any other method, update the instance first by using below command:
 
 ```sh
 sudo yum update -y
@@ -44,7 +44,7 @@ Command to check git version :
 sudo git --version
 ```
 
-Command to install git to clone the repository.
+Command to clone the repository.
 
 ```sh
 sudo git clone https://github.com/Abhishek-2502/FastAPI_Deploy
