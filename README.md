@@ -47,7 +47,14 @@ Command to install all the requirements required for the project to run. In our 
 
 ```sh
 pip install .
-```
+```  
+
+if not works then
+
+```sh
+pip install . --break-system-packages
+```  
+
 
 Command to install all the requirements required for the project to run using requirements.txt file.
 pip install -r requirements.txt
@@ -70,4 +77,25 @@ Go to the public ip provided by the instance add :8000 in the end as our api is 
 
 That's it you can now access your Fastapi from anywhere.
 
+
+Other Commands:
+
+To create Virtual Environment:
+
+```sh
+python3 -m venv venv
+```
+```sh
+source venv/bin/activate
+```
+
+To delete directory:
+```sh
+sudo rm -rf Directory_Name
+```
+
+To run python commands:
+```sh
+python3 -m command_of_python
+```
 
