@@ -108,7 +108,7 @@ After running go to AWS instance --> Security tab --> Edit inbound rules --> Cre
 Access the website from "Public IPv4 address" provided by the instance and add :8000 in the end as our api is running at that particular port.
 
 
-### CICD Integration
+### CICD Integration (For Setup.py)
 
 1. Under Git Action, select set up a workflow yourself.
 
