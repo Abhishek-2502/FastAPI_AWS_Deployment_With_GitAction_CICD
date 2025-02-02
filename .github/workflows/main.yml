@@ -34,8 +34,8 @@ jobs:
           # Install dependencies via setup.py
           sudo python3 setup.py install
 
-          # Start FastAPI application
-          start-fastapi
+          # # Start FastAPI application
+          # start-fastapi
         EOF
 
 
