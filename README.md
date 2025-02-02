@@ -141,11 +141,15 @@ jobs:
     - name: Deploy to EC2
       run: |
         ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
-          cd /home/ec2-user/FastAPI_Deploy
-          sudo chown -R ec2-user:ec2-user .  # Change ownership of the whole repo
-          sudo chmod -R u+rw .  # Ensure read/write permissions for the user
-          git config --global --add safe.directory /home/ec2-user/FastAPI_Deploy  # Add the repo to safe directory
-          git pull origin main  # Pull latest code
+          cd /home/ec2-user/FastAPI_Deploy   # CHANGE ACCORDING TO YOUR REPO
+          # Change ownership of the whole repo
+          sudo chown -R ec2-user:ec2-user .
+          # Ensure read/write permissions for the user
+          sudo chmod -R u+rw .  
+          # Add the repo to safe directory 
+          git config --global --add safe.directory /home/ec2-user/FastAPI_Deploy  # CHANGE ACCORDING TO YOUR REPO
+          # Pull latest code
+          git pull origin main  
 
           # Add any additional deployment commands here
           # Install dependencies via setup.py
@@ -161,7 +165,13 @@ jobs:
 Command to generate secret key:
 
 ```sh
-ssh-keygen -t rsa -b 4096 -f github-deploy
+sudo ssh-keygen -t rsa -b 4096 -f ~/.ssh/github-deploy
+
+```
+
+Command to give permissions:
+```sh
+chmod 600 ~/.ssh/authorized_keys
 ```
 
 Command to see public key:
@@ -174,11 +184,6 @@ Command to set public key:
 
 ```sh
 cat ~/.ssh/github-deploy.pub >> ~/.ssh/authorized_keys
-```
-
-Command to give permissions:
-```sh
-chmod 600 ~/.ssh/authorized_keys
 ```
 
 Command to get private key:
