@@ -34,12 +34,6 @@ jobs:
           # Install dependencies via setup.py
           sudo python3 setup.py install
 
-          # # Start FastAPI application
-          # start-fastapi
-
-          # pkill -f "start-fastapi" || true
-          # nohup start-fastapi > fastapi.log 2>&1 &
-
           # Stop existing FastAPI process safely
           PID=$(pgrep -f "uvicorn")
           if [ ! -z "$PID" ]; then
