@@ -186,9 +186,9 @@ Command to get private key:
 cat ~/.ssh/github-deploy
 ```
 
-4. Get your Public IPv4 DNS from EC2 Instance from right side. Ex: ec2-64-0-123-xxx.ap-south-1.compute.amazonaws.com
+4. Get your Public IPv4 DNS from EC2 Instance from right side.<br> Ex: ec2-64-0-123-xxx.ap-south-1.compute.amazonaws.com
 
-5. Goto Settings of repo and than Security-> Secrets and Variables-> Actions, add following Variables:
+5. Goto Settings of repo and than Security-> Secrets and Variables-> Actions, add following Variables:<br>
     EC2_HOST : Pubic_IPv4_DNS from Step 4
     EC2_SSH_PRIVATE_KEY : Private key from Step 3
 
