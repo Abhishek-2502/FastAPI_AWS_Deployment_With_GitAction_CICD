@@ -1,5 +1,5 @@
-# FastAPI_Deployment
-Complete Guide to deploy FastAPI. Below are the steps to deploy FastAPI on AWS EC2 and access it through anywhere on the internet.
+# FastAPI_Deployment_With_CICD
+Complete Guide to deploy FastAPI app and develop CICD Pipeline on AWS EC2.
 
 ### Built With
 
@@ -21,12 +21,17 @@ After you enter the instance by ssh or any other method, update the instance fir
 sudo yum update -y
 ```
 
-Command to install python :
+Command to install python and pip :
 
 ```sh
-sudo yum install -y python3
+sudo yum install python3-pip -y
 ```
 
+Command to upgrade pip:
+
+```sh
+pip3 install --upgrade pip
+```
 
 Command to install git to clone the repository :
 
@@ -44,6 +49,12 @@ Command to check git version :
 
 ```sh
 sudo git --version
+```
+
+Command to check pip version :
+
+```sh
+pip3 --version
 ```
 
 Command to clone the repository.
@@ -94,7 +105,100 @@ python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 
 After running go to AWS instance --> Security tab --> Edit inbound rules --> Create rule --> Select All traffic and IPv4<br>
 
-Go to the public ip provided by the instance add :8000 in the end as our api is running at that particular port.
+Access the website from "Public IPv4 address" provided by the instance and add :8000 in the end as our api is running at that particular port.
+
+
+### CICD Integration
+
+1. Under Git Action, select set up a workflow yourself.
+
+2. Add following code in main.yml
+
+```sh
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Checkout the code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Set up SSH agent to use the private key stored in GitHub Secrets
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+
+    # Deploy to EC2
+    - name: Deploy to EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+          cd /home/ec2-user/FastAPI_Deploy
+          sudo chown -R ec2-user:ec2-user .  # Change ownership of the whole repo
+          sudo chmod -R u+rw .  # Ensure read/write permissions for the user
+          git config --global --add safe.directory /home/ec2-user/FastAPI_Deploy  # Add the repo to safe directory
+          git pull origin main  # Pull latest code
+
+          # Add any additional deployment commands here
+          # Install dependencies via setup.py
+          sudo python3 setup.py install
+
+          # Start FastAPI application
+          start-fastapi
+        EOF
+```
+
+3. In EC2 instance, type following commands to get Secret Keys.
+
+Command to generate secret key:
+
+```sh
+ssh-keygen -t rsa -b 4096 -f github-deploy
+```
+
+Command to see public key:
+
+```sh
+cat ~/.ssh/github-deploy.pub
+```
+
+Command to set public key:
+
+```sh
+cat ~/.ssh/github-deploy.pub >> ~/.ssh/authorized_keys
+```
+
+Command to give permissions:
+```sh
+chmod 600 ~/.ssh/authorized_keys
+```
+
+Command to get private key:
+```sh
+cat ~/.ssh/github-deploy
+```
+
+4. Get your Public IPv4 DNS from EC2 Instance from right side. Ex: ec2-64-0-123-xxx.ap-south-1.compute.amazonaws.com
+
+5. Goto Settings of repo and than Security-> Secrets and Variables-> Actions, add following Variables:
+    EC2_HOST : Pubic_IPv4_DNS from Step 4
+    EC2_SSH_PRIVATE_KEY : Private key from Step 3
+
+6. Pull all the updated code than push some code for testing.
+
+7. Goto Git Action for seeing the workflow lifecycle.
+
+8. Access the website from "Public IPv4 address" provided by the instance and add :8000 in the end as our api is running at that particular port.
+
+
 
 
 Other Commands:

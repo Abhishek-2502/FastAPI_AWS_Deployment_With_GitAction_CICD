@@ -8,4 +8,4 @@ async def root():
 
 @app.get("/test")
 async def test_route():
-    return {"message": "this is test11223245235"}
+    return {"message": "this is test"}
