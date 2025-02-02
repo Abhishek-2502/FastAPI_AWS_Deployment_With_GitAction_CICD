@@ -1,0 +1,37 @@
+name: Deploy FastAPI to EC2
+
+on:
+  push:
+    branches:
+      - main  # Adjust if your default branch is different
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy application to EC2
+        run: |
+          ssh ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+            cd /home/ec2-user/FastAPI_Deploy # Change to your actual project directory
+            
+            # Pull latest changes
+            git pull origin main  
+
+            # Install the app using setup.py
+            sudo python3 setup.py install  
+
+            # Restart FastAPI application
+            sudo systemctl restart fastapi.service || sudo start-fastapi  
+          EOF
