@@ -24,7 +24,9 @@ jobs:
     - name: Deploy to EC2
       run: |
         ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
-          cd FastAPI_Deploy
+          cd /home/ec2-user/FastAPI_Deploy
+          git config --global --add safe.directory /home/ec2-user/FastAPI_Deploy  # Add the repo to safe directory
           git pull origin main  # Pull latest code
           # Add any additional deployment commands here
         EOF
+
