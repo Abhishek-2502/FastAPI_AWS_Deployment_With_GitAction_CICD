@@ -37,8 +37,20 @@ jobs:
           # # Start FastAPI application
           # start-fastapi
 
-          pkill -f "start-fastapi" || true
+          # pkill -f "start-fastapi" || true
+          # nohup start-fastapi > fastapi.log 2>&1 &
+
+          # Stop existing FastAPI process safely
+          PID=$(pgrep -f "uvicorn")
+          if [ ! -z "$PID" ]; then
+            echo "Stopping existing FastAPI process with PID $PID"
+            kill -9 $PID
+          fi
+    
+          # Start FastAPI in the background
           nohup start-fastapi > fastapi.log 2>&1 &
+    
+          echo "FastAPI restarted successfully!"
         EOF
 
 
