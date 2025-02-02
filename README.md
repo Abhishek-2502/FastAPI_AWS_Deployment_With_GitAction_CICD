@@ -31,28 +31,38 @@ Command to install git to clone this repository :
 sudo apt install git
 ```
 
-Command to install git to clone this repository you can use your repository git url which you want to host :
+Command to install git to clone this repository. You can use your own repository git url which you want to host :
 
 ```sh
-sudo git clone https://github.com/smurfcoders/fastapi-hosting.git
+sudo git clone https://github.com/Abhishek-2502/FastAPI_Deploy
 ```
 
-Command to change location into the cloned folder you can use your repository name :
+Command to change location into the cloned folder. You can use your own repository name :
 
 ```sh
-cd fastapi-hosting
+cd FastAPI_Deploy
 ```
 
-Command to install all the requirements required for the project to run in our case we have created requirements.txt file you can also create your own requirements :
+Command to install all the requirements required for the project to run. In our case we have created setup.py file, you can also create your own requirements :
 
 ```sh
+pip install .
+```
+
+Command to install all the requirements required for the project to run using requirements.txt file.
 pip install -r requirements.txt
 ```
 
-Command to run the API :
+Command to run the API when using setup.py file:
 
 ```sh
-python3 -m uvicorn main:app --host 0.0.0.0 --port 8000
+python3 -m start-fastapi
+```
+
+Command to run the API when using requirement.txt file:
+
+```sh
+python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
 After running go to AWS instance --> Security tab --> Edit inbound rules --> create rule --> Enable access from anywhere.<br>
