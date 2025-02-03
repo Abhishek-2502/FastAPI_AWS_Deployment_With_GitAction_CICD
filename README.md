@@ -176,24 +176,24 @@ sudo ssh-keygen -t rsa -b 4096 -f ~/.ssh/github-deploy
 
 Command to give permissions:
 ```sh
-chmod 600 ~/.ssh/authorized_keys
+sudo chmod 600 ~/.ssh/authorized_keys
 ```
 
 Command to see public key:
 
 ```sh
-cat ~/.ssh/github-deploy.pub
+sudo cat ~/.ssh/github-deploy.pub
 ```
 
 Command to set public key:
 
 ```sh
-cat ~/.ssh/github-deploy.pub >> ~/.ssh/authorized_keys
+sudo cat ~/.ssh/github-deploy.pub >> ~/.ssh/authorized_keys
 ```
 
 Command to get private key:
 ```sh
-cat ~/.ssh/github-deploy
+sudo cat ~/.ssh/github-deploy
 ```
 
 4. Get your Public IPv4 DNS from EC2 Instance from right side.<br> Ex: ec2-64-0-123-xxx.ap-south-1.compute.amazonaws.com
