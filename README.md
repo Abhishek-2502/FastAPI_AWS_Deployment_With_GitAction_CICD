@@ -1,5 +1,5 @@
-# FastAPI_Deployment_With_CICD
-Complete Guide to Deploy FastAPI app and develop CICD Pipeline on AWS EC2.
+# FastAPI_AWS_Deployment_With_GitAction_CICD
+Complete Guide to Deploy FastAPI app on AWS and develop CICD Pipeline on AWS EC2.
 
 ### Built With
 
