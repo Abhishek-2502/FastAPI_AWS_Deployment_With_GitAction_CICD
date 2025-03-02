@@ -213,6 +213,11 @@ sudo cat ~/.ssh/github-deploy
 
 Other Commands:
 
+To see hidden directory and files:
+```sh
+dir -a
+```
+
 To delete directory in ubuntu:
 ```sh
 sudo rm -rf Directory_Name
