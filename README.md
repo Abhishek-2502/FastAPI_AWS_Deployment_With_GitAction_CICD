@@ -185,13 +185,13 @@ Command to see public key:
 sudo cat ~/.ssh/github-deploy.pub
 ```
 
-Command to set public key:
+Command for passwordless SSH login or deploy keys for GitHub, CI/CD, or remote servers.
 
 ```sh
 sudo cat ~/.ssh/github-deploy.pub >> ~/.ssh/authorized_keys
 ```
 
-Command to get private key:
+Command to see private key:
 ```sh
 sudo cat ~/.ssh/github-deploy
 ```
