@@ -140,7 +140,8 @@ jobs:
     # Deploy to EC2
     - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_HOST }} << 'EOF' # For Amazon Linux based EC2
+        # ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF' # For ubuntu based EC2
           cd /home/ec2-user/FastAPI_Deploy
           sudo chown -R ec2-user:ec2-user .  # Change ownership of the whole repo
           sudo chmod -R u+rw .  # Ensure read/write permissions for the user
